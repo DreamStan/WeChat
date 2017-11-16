@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.movehouse.dao.ImgUrlDao">
+	<!-- ResultMap定义-->
+	<resultMap id="BaseResultMap" type="com.movehouse.entity.ImgUrl" >
+		<id column="id" property="id"/>
+		<result column="busid" property="busid" />
+		<result column="imgurl" property="imgurl" />
+	</resultMap>
+
+	<insert id="addImg">
+		INSERT INTO wx_movehouse.publicitybus(imgurl,busid)
+		 VALUES (
+		 CONCAT('https://hell0w0rld.xin/movehouse/upload/publicity/',#{imgUrl.imgurl}),#{imgUrl.busid}
+		 )
+	</insert>
+
+	<select id="showImg" resultMap="BaseResultMap">
+		SELECT p.imgurl
+		FROM wx_movehouse.publicitybus p
+	</select>
+
+	<select id="imgCnt" resultMap="BaseResultMap">
+		SELECT COUNT(p.id) AS busid
+		FROM wx_movehouse.publicitybus p
+	</select>
+
+</mapper>

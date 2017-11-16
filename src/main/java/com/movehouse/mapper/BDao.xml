@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.movehouse.dao.BDao">
+	<!-- ResultMap定义-->
+	<resultMap id="BaseResultMap" type="com.movehouse.entity.Businessmen" >
+		<id column="id" property="id"/>
+		<result column="bus_name" property="busName" />
+		<result column="bus_logo" property="busLogo" />
+		<result column="bus_introduction" property="busIntroduction" />
+		<result column="bus_ser" property="busSer" />
+		<result column="bus_fixedtelephone" property="busFixedtelephone" />
+		<result column="bus_mobiletelephone" property="busMobiletelephone" />
+		<result column="username" property="userName" />
+	</resultMap>
+
+	<select id="busLookUp" resultMap="BaseResultMap">
+		SELECT id,bus_logo,bus_name,bus_ser,bus_fixedtelephone,bus_mobiletelephone,bus_introduction
+		FROM wx_movehouse.businessmen
+	</select>
+
+	<select id="busDetalis" resultMap="BaseResultMap">
+		SELECT bus.bus_name,bus.bus_introduction,bus.bus_ser,bus.bus_fixedtelephone,bus.bus_mobiletelephone
+		FROM WX_MoveHouse.businessmen bus
+		WHERE id=#{id}
+	</select>
+
+	<insert id="addBus">
+		INSERT INTO wx_movehouse.businessmen(bus_name, username,bus_introduction, bus_ser,
+                        bus_fixedtelephone, bus_mobiletelephone,bus_logo)
+		VALUES (#{bus.busName},
+		#{bus.userName},
+        #{bus.busIntroduction},
+        #{bus.busSer},
+        #{bus.busFixedtelephone},
+        #{bus.busMobiletelephone},
+        CONCAT('https://hell0w0rld.xin/upload/logo/',#{bus.busLogo}))
+	</insert>
+
+	<update id="modifyBus">
+		UPDATE wx_movehouse.businessmen SET bus_name=#{businessmen.busName},bus_ser=#{businessmen.busSer},
+		bus_fixedtelephone=#{businessmen.busFixedtelephone},bus_mobiletelephone=#{businessmen.busMobiletelephone},
+		bus_introduction=#{businessmen.busIntroduction}
+		WHERE id=#{businessmen.id}
+	</update>
+
+	<select id="busCnt" resultMap="BaseResultMap">
+		SELECT COUNT(b.id) AS id
+		FROM wx_movehouse.businessmen b
+	</select>
+
+	<delete id="delBus">
+		DELETE FROM wx_movehouse.businessmen
+		WHERE id=${id}
+	</delete>
+
+
+</mapper>
